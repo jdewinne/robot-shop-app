@@ -1,0 +1,14 @@
+apiVersion: kots.io/v1beta1
+kind: HelmChart
+metadata:
+  name: robot-shop-chart
+spec:
+  # chart identifies a matching chart from a .tgz
+  chart:
+    name: robot-shop
+    chartVersion: 1.1.0
+  helmVersion: v3
+  useHelmInstall: true
+  values: 
+    numberWebReplicas: repl{{ ConfigOption "replicas-count" }}
+    openshift: repl{{ ConfigOptionEquals "deployment-model" "openshift" }}

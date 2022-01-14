@@ -1,0 +1,31 @@
+apiVersion: kots.io/v1beta1
+kind: Config
+metadata:
+  name: config-sample
+spec:
+  groups:
+    - name: deployment-config
+      title: Deployment Settings
+      description: Settings for configuring Robot Shop. For more information, see https://github.com/instana/robot-shop
+      items:
+        - name: deployment-model
+          type: select_one
+          title: Deployment Model
+          default: single-vm
+          items:
+            - name: single-vm
+              title: Single VM Deployment
+            - name: k8-deploy
+              title: Kubernetes (GKE, EKS, etc...)
+            - name: openshift
+              title: Openshift
+        - name: nodeport_value
+          title: Node Port
+          help_text: Enter the port to expose the Application
+          type: text
+          when: repl{{ ConfigOptionEquals "deployment-model" "single-vm" }}
+          default: '30085'
+        - name: replicas-count
+          title: Enter Number of Web Workers
+          type: text
+          default: "3"
